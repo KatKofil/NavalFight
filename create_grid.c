@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
+#include "navalfight.h"
 
 //test si un bateau est present dans la case et les case adjacente
 
@@ -679,7 +677,7 @@ char **cree_tableau(void){
 		grid[conteur_col] = (char *)malloc(sizeof(char) * 18);
 	for (conteur_line = 0; conteur_line < 17; conteur_line++){
 		for (conteur_col = 0; conteur_col < 17; conteur_col++)
-			grid[conteur_line][conteur_col] = '-';
+			grid[conteur_line][conteur_col] = '.';
 		grid[conteur_line][conteur_col] = '\0';
 	}
 	grid[conteur_line][0] = '\0';
