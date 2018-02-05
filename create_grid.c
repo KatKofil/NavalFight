@@ -671,7 +671,6 @@ char **cree_tableau(void){
 	int conteur_col;
 	int conteur_line;
 
-	srand(time(NULL));
 	grid = (char **)malloc(sizeof(char *) * 18);
 	for (conteur_col = 0; conteur_col < 18; conteur_col++)
 		grid[conteur_col] = (char *)malloc(sizeof(char) * 18);
