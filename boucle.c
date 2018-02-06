@@ -21,14 +21,26 @@ void viderbuffer(void){  // Vide le buffer (Annule l'entrée '\n' au clavier)
   }
 }
 
+void findepartie(void) {
+  printf("Gagne !\n");
+  exit(0);
+}
 
 void insert(char **grid, int ligne  , int colonne){
-
+  int victoire;
   if (grid[ligne][colonne]== 'O'){
     grid[ligne][colonne]= '+';
+    if (couler(ligne, colonne, grid) == 0) {
+      printf("\nBateau coulé !\n");
+      victoire = ft_detect_defaite(grid);
+    }
   }
   if(grid[ligne][colonne]== '.'){
     grid[ligne][colonne]='*';
+  }
+  if (victoire == 0) {
+    printf("\nC\n");
+    findepartie();
   }
 }
 
