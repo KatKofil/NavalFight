@@ -18,12 +18,23 @@ int ft_boat_1_4_1_3(char **grid, int indice_col, int indice_line);
 char **ft_fill_grid(char **grid);
 char **cree_tableau(void);
 
+// Prototype test_couler.c
+int couler_droite(int x,int y, char ** grid);
+int couler_gauche(int x,int y, char ** grid);
+int couler_haut(int x,int y, char ** grid);
+int couler_bas(int x,int y, char ** grid);
+int couler(int x,int y,char ** grid);
+
+// Prototype defaite.c
+int ft_detect_defaite(char **grid);
+
 // Prototype afficha.c
 void afficher(char** grille);
 
 // Prototype boucle.c
 char * nomjoueur(void);
 void viderbuffer(void);
+void findepartie(void);
 void insert(char **grid, int ligne  , int colonne);
 int verifie (char **grid, int ligne  , int colonne);
 int attaquer(char **grid);
