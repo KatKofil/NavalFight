@@ -1,5 +1,5 @@
 CC=gcc
-SRC=create_grid.c boucle.c main.c afficha.c
+SRC=create_grid.c boucle.c main.c afficha.c defaite.c test_couler.c
 OBJ=$(SRC:.c=.o)
 FLAGS=-Wall
 
