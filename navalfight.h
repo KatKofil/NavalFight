@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <unistd.h>
 
 
 // Prototype create_grid.c
@@ -19,10 +20,10 @@ char **ft_fill_grid(char **grid);
 char **cree_tableau(void);
 
 // Prototype test_couler.c
-int couler_droite(int x,int y, char ** grid);
-int couler_gauche(int x,int y, char ** grid);
-int couler_haut(int x,int y, char ** grid);
-int couler_bas(int x,int y, char ** grid);
+int couler_droite(int x,int y, char ** grid, int conteur);
+int couler_gauche(int x,int y, char ** grid, int conteur);
+int couler_haut(int x,int y, char ** grid, int conteur);
+int couler_bas(int x,int y, char ** grid, int conteur);
 int couler(int x,int y,char ** grid);
 
 // Prototype defaite.c
