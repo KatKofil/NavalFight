@@ -2,7 +2,8 @@
 
 int couler_droite(int x,int y, char ** grid, int conteur){
 	int resultat = 0;
-	if (conteur > 100)
+	conteur++;
+	if (conteur > 10)
 		return 0;
 	if (grid[x][y] == 'O')
 		return 1;
@@ -19,7 +20,8 @@ int couler_droite(int x,int y, char ** grid, int conteur){
 
 int couler_gauche(int x,int y, char ** grid, int conteur){
 	int resultat = 0;
-	if (conteur > 100)
+	conteur++;
+	if (conteur > 10)
 		return 0;
 	if (grid[x][y] == 'O')
 		return 1;
@@ -36,7 +38,8 @@ int couler_gauche(int x,int y, char ** grid, int conteur){
 
 int couler_haut(int x,int y, char ** grid, int conteur){
 	int resultat = 0;
-	if (conteur > 100)
+	conteur++;
+	if (conteur > 10)
 		return 0;
 	if (grid[x][y] == 'O')
 		return 1;
@@ -54,7 +57,8 @@ int couler_haut(int x,int y, char ** grid, int conteur){
 
 int couler_bas(int x,int y, char ** grid, int conteur){
 	int resultat = 0;
-	if (conteur > 100)
+	conteur++;
+	if (conteur > 10)
 		return 0;
 	if (grid[x][y] == 'O')
 		return 1;
