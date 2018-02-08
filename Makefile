@@ -9,4 +9,4 @@ navalfight:    $(OBJ) navalfight.h
 	$(CC) -c $< $(CFLAGS)
 
 clean:
-	rm *.o *~ coremain.o : main.c
+	rm $(OBJ) *~
