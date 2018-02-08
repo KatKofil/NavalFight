@@ -41,6 +41,7 @@ void insert(char **grid, int ligne  , int colonne){
   }
   if(grid[ligne][colonne]== '.'){
     grid[ligne][colonne]='*';
+	printf("\nRaté !\n");
   }
   if (victoire == 0) {
     findepartie();
