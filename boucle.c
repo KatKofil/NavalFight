@@ -30,8 +30,11 @@ void insert(char **grid, int ligne  , int colonne){
   int victoire;
   if (grid[ligne][colonne]== 'O'){
     grid[ligne][colonne]= '+';
+    printf("\nTouché !\n");
+    sleep(1);
     if (couler(ligne, colonne, grid) == 0) {
       printf("\nBateau coulé !\n");
+      sleep(1);
       victoire = ft_detect_defaite(grid);
     }
   }
@@ -39,7 +42,6 @@ void insert(char **grid, int ligne  , int colonne){
     grid[ligne][colonne]='*';
   }
   if (victoire == 0) {
-    printf("\nC\n");
     findepartie();
   }
 }
@@ -57,7 +59,8 @@ int verifie (char **grid, int ligne  , int colonne){
     return 0;        
   }
   if(grid[ligne][colonne]== '*' || grid[ligne][colonne]== '+'|| grid[ligne][colonne]== 'X'){
-    printf("Impossible de jouer, case déjà attaquée\n");
+    sleep(1);
+    printf("\nImpossible de jouer, case déjà attaquée !\n");
     // demande au joueur de choisir une autre case 
     return 1;
   }
@@ -72,7 +75,7 @@ int attaquer(char **grid) {
   int i, j;    // Compteur plateau
   int casevalide;
   while (conditionligne == 1) {
-    printf("Choississez la ligne (lettre):\n");
+    printf("Choississez la ligne (lettre minuscule):\n");
     scanf("%c", &ligne);
     if (ligne >= 97 && ligne <= 113) {
       ligne -= 97;
