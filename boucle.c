@@ -33,7 +33,8 @@ void insert(char **grid, int ligne  , int colonne){
     printf("\nTouché !\n");
     sleep(1);
     if (couler(ligne, colonne, grid) == 0) {
-      printf("\nBateau coulé !\n");
+	  if (put_couler(ligne, colonne, grid) == 0)
+		printf("\nBateau coulé !\n");
       sleep(1);
       victoire = ft_detect_defaite(grid);
     }

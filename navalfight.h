@@ -26,6 +26,13 @@ int couler_haut(int x,int y, char ** grid, int conteur);
 int couler_bas(int x,int y, char ** grid, int conteur);
 int couler(int x,int y,char ** grid);
 
+// Prototype put_couler.c
+int put_couler_droite(int x,int y, char ** grid, int conteur);
+int put_couler_gauche(int x,int y, char ** grid, int conteur);
+int put_couler_haut(int x,int y, char ** grid, int conteur);
+int put_couler_bas(int x,int y, char ** grid, int conteur);
+int put_couler(int x,int y,char ** grid);
+
 // Prototype defaite.c
 int ft_detect_defaite(char **grid);
 
