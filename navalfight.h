@@ -37,6 +37,7 @@ int put_couler(int x,int y,char ** grid);
 int ft_detect_defaite(char **grid);
 
 // Prototype afficha.c
+void regle(void);
 void afficher(char** grille);
 
 // Prototype boucle.c

@@ -1,5 +1,9 @@
 #include "navalfight.h"
 
+
+
+
+
 char * nomjoueur(){
   char *chaine, *temporaire;
   chaine = malloc(20* sizeof(char));
@@ -123,9 +127,12 @@ void boucle(char **grid1, char **grid2) {
   compteurjoueurun = 0;
   compteurjoueurdeux = 0;
 
+  regle();
+
   char *joueur1 = nomjoueur();
   char *joueur2 = nomjoueur();
   
+
   while(compteurprincipale == 0) {  // Boucle principale du jeu
 
     printf("\n------------------------------------------------------------------------------------------\n\n\n");

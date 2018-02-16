@@ -1,5 +1,20 @@
 #include"navalfight.h"
 
+
+void regle(){
+printf("------------------------------------Bataille Naval--------------------------------------\n");
+printf("Règles :\n");
+printf("\n");
+printf(". = Vide\n");
+printf("* = Raté \n");
+printf("X = coulé \n");
+printf("+ = touché \n");
+printf("\n");
+
+}
+
+
+
 void afficher(char** grille){
   int ligne, colonne;
   char lettre = 'A';
