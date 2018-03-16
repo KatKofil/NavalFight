@@ -9,9 +9,9 @@ int couler_droite(int x,int y, char ** grid, int conteur){
 		return 1;
 	if (grid[x][y] == '.' || grid[x][y] == '*')
 		return 0;
-	if(x + 1 < 17)
+	if(x + 1 < TAILLE_GRID)
 		resultat += couler_droite(x + 1, y, grid, conteur);
-	if (y + 1 < 17)
+	if (y + 1 < TAILLE_GRID)
 		resultat += couler_bas(x, y + 1, grid, conteur);
 	if (y - 1 > -1)
 		resultat += couler_haut(x, y - 1, grid, conteur);

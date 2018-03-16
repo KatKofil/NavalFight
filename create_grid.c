@@ -3,11 +3,11 @@
 //test si un bateau est present dans la case et les case adjacente
 
 int ft_test_born(int indice_col,int indice_line){
-	if (indice_col > 16)
+	if (indice_col > TAILLE_GRID - 1)
 		return 1;
 	if (indice_col < 0)
 		return 1;
-	if (indice_line > 16)
+	if (indice_line > TAILLE_GRID - 1)
 		return 1;
 	if (indice_line < 0)
 		return 1;
@@ -54,7 +54,7 @@ int ft_boat_1_2(char **grid, int indice_col, int indice_line){
 		if (ft_test_boat(grid, conteur_col + 1, conteur_line - 1) != 0)
 			return 1;
 	}
-	if (indice_col < 16){
+	if (indice_col < TAILLE_GRID - 1){
 		grid[indice_line][indice_col] = 'O';
 		grid[indice_line][indice_col + 1] = 'O';
 		return 0;
@@ -102,7 +102,7 @@ int ft_boat_1_3(char **grid, int indice_col, int indice_line){
 		if (ft_test_boat(grid, conteur_col + 3, conteur_line) != 0)
 			return 1;
 	}
-	if (indice_col < 15){
+	if (indice_col < TAILLE_GRID - 2){
 		grid[indice_line][indice_col] = 'O';
 		grid[indice_line][indice_col + 1] = 'O';
 		grid[indice_line][indice_col + 2] = 'O';
@@ -169,7 +169,7 @@ int ft_boat_1_4(char **grid, int indice_col, int indice_line){
 		if (ft_test_boat(grid, conteur_col, conteur_line + 4) != 0)
 			return 1;
 	}
-	if (indice_line < 14){
+	if (indice_line < TAILLE_GRID - 3){
 		grid[indice_line][indice_col] = 'O';
 		grid[indice_line + 1][indice_col] = 'O';
 		grid[indice_line + 2][indice_col] = 'O';
@@ -249,7 +249,7 @@ int ft_boat_1_5(char **grid, int indice_col, int indice_line){
 		if (ft_test_boat(grid, conteur_col, conteur_line + 5) != 0)
 			return 1;
 	}
-	if (indice_line < 13){
+	if (indice_line < TAILLE_GRID - 4){
 		grid[indice_line][indice_col] = 'O';
 		grid[indice_line + 1][indice_col] = 'O';
 		grid[indice_line + 2][indice_col] = 'O';
@@ -342,7 +342,7 @@ if (ft_test_born(conteur_col - 1, conteur_line) == 0){
 		if (ft_test_boat(grid, conteur_col + 6, conteur_line) != 0)
 			return 1;
 	}
-	if (indice_col < 12){
+	if (indice_col < TAILLE_GRID - 5){
 		grid[indice_line][indice_col] = 'O';
 		grid[indice_line][indice_col + 1] = 'O';
 		grid[indice_line][indice_col + 2] = 'O';
@@ -404,7 +404,7 @@ int ft_boat_2_2(char **grid, int indice_col, int indice_line){
 		if (ft_test_boat(grid, conteur_col + 1, conteur_line + 2) != 0)
 			return 1;
 	}
-	if (indice_col < 15 && indice_line < 15){
+	if (indice_col < TAILLE_GRID - 2 && indice_line < TAILLE_GRID - 2){
 		grid[indice_line][indice_col] = 'O';
 		grid[indice_line + 1][indice_col] = 'O';
 		grid[indice_line][indice_col + 1] = 'O';
@@ -508,7 +508,7 @@ int ft_boat_2_4(char **grid, int indice_col, int indice_line){
 			return 1;
 	}
 
-	if (indice_col < 13 && indice_line < 15){
+	if (indice_col < TAILLE_GRID - 4 && indice_line < TAILLE_GRID - 2){
 		grid[indice_line][indice_col] = 'O';
 		grid[indice_line + 1][indice_col] = 'O';
 		grid[indice_line][indice_col + 1] = 'O';
@@ -600,7 +600,7 @@ int ft_boat_1_4_1_3(char **grid, int indice_col, int indice_line){
 		if (ft_test_boat(grid, conteur_col + 2, conteur_line + 4) != 0)
 			return 1;
 	}
-	if (indice_line < 13 && indice_col < 14){
+	if (indice_line < TAILLE_GRID - 4 && indice_col < TAILLE_GRID - 3){
 		grid[indice_line][indice_col] = 'O';
 		grid[indice_line + 1][indice_col] = 'O';
 		grid[indice_line + 2][indice_col] = 'O';
@@ -614,54 +614,54 @@ int ft_boat_1_4_1_3(char **grid, int indice_col, int indice_line){
 
 
 char **ft_fill_grid(char **grid){
-	int indice_col = (rand() % 17);
-	int indice_line = (rand() % 17);
+	int indice_col = (rand() % TAILLE_GRID);
+	int indice_line = (rand() % TAILLE_GRID);
 
 	while (ft_boat_1_2(grid, indice_col, indice_line) != 0){
-		indice_col = (rand() % 17);
-		indice_line = (rand() % 17);
+		indice_col = (rand() % TAILLE_GRID);
+		indice_line = (rand() % TAILLE_GRID);
 	}
-	indice_col = (rand() % 17);
-	indice_line = (rand() % 17);
+	indice_col = (rand() % TAILLE_GRID);
+	indice_line = (rand() % TAILLE_GRID);
 	while (ft_boat_1_3(grid, indice_col, indice_line) != 0){
-		indice_col = (rand() % 17);
-		indice_line = (rand() % 17);
+		indice_col = (rand() % TAILLE_GRID);
+		indice_line = (rand() % TAILLE_GRID);
 	}
-	indice_col = (rand() % 17);
-	indice_line = (rand() % 17);
+	indice_col = (rand() % TAILLE_GRID);
+	indice_line = (rand() % TAILLE_GRID);
 	while (ft_boat_1_4(grid, indice_col, indice_line) != 0){
-		indice_col = (rand() % 17);
-		indice_line = (rand() % 17);
+		indice_col = (rand() % TAILLE_GRID);
+		indice_line = (rand() % TAILLE_GRID);
 	}
-	indice_col = (rand() % 17);
-	indice_line = (rand() % 17);
+	indice_col = (rand() % TAILLE_GRID);
+	indice_line = (rand() % TAILLE_GRID);
 	while (ft_boat_1_5(grid, indice_col, indice_line) != 0){
-		indice_col = (rand() % 17);
-		indice_line = (rand() % 17);
+		indice_col = (rand() % TAILLE_GRID);
+		indice_line = (rand() % TAILLE_GRID);
 	}
-	indice_col = (rand() % 17);
-	indice_line = (rand() % 17);
+	indice_col = (rand() % TAILLE_GRID);
+	indice_line = (rand() % TAILLE_GRID);
 	while (ft_boat_1_6(grid, indice_col, indice_line) != 0){
-		indice_col = (rand() % 17);
-		indice_line = (rand() % 17);
+		indice_col = (rand() % TAILLE_GRID);
+		indice_line = (rand() % TAILLE_GRID);
 	}
-	indice_col = (rand() % 17);
-	indice_line = (rand() % 17);
+	indice_col = (rand() % TAILLE_GRID);
+	indice_line = (rand() % TAILLE_GRID);
 	while (ft_boat_2_2(grid, indice_col, indice_line) != 0){
-		indice_col = (rand() % 17);
-		indice_line = (rand() % 17);
+		indice_col = (rand() % TAILLE_GRID);
+		indice_line = (rand() % TAILLE_GRID);
 	}
-	indice_col = (rand() % 17);
-	indice_line = (rand() % 17);
+	indice_col = (rand() % TAILLE_GRID);
+	indice_line = (rand() % TAILLE_GRID);
 	while (ft_boat_2_4(grid, indice_col, indice_line) != 0){
-		indice_col = (rand() % 17);
-		indice_line = (rand() % 17);
+		indice_col = (rand() % TAILLE_GRID);
+		indice_line = (rand() % TAILLE_GRID);
 	}
-	indice_col = (rand() % 17);
-	indice_line = (rand() % 17);
+	indice_col = (rand() % TAILLE_GRID);
+	indice_line = (rand() % TAILLE_GRID);
 	while (ft_boat_1_4_1_3(grid, indice_col, indice_line) != 0){
-		indice_col = (rand() % 17);
-		indice_line = (rand() % 17);
+		indice_col = (rand() % TAILLE_GRID);
+		indice_line = (rand() % TAILLE_GRID);
 	}
 	return grid;
 }
@@ -671,11 +671,11 @@ char **cree_tableau(void){
 	int conteur_col;
 	int conteur_line;
 
-	grid = (char **)malloc(sizeof(char *) * 18);
-	for (conteur_col = 0; conteur_col < 18; conteur_col++)
-		grid[conteur_col] = (char *)malloc(sizeof(char) * 18);
-	for (conteur_line = 0; conteur_line < 17; conteur_line++){
-		for (conteur_col = 0; conteur_col < 17; conteur_col++)
+	grid = (char **)malloc(sizeof(char *) * TAILLE_GRID + 1);
+	for (conteur_col = 0; conteur_col < TAILLE_GRID + 1; conteur_col++)
+		grid[conteur_col] = (char *)malloc(sizeof(char) * TAILLE_GRID + 1);
+	for (conteur_line = 0; conteur_line < TAILLE_GRID; conteur_line++){
+		for (conteur_col = 0; conteur_col < TAILLE_GRID; conteur_col++)
 			grid[conteur_line][conteur_col] = '.';
 		grid[conteur_line][conteur_col] = '\0';
 	}

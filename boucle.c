@@ -97,17 +97,17 @@ int attaquer(char **grid) {
   while (conditioncolonne == 1) {
     printf("Choississez la colonne (nombre):\n");
     scanf("%d", &colonne);
-    if (colonne >= 0 && colonne <= 16) {
+    if (colonne >= 0 && colonne <= TAILLE_GRID - 1) {
       conditioncolonne = 0;
     } else {
-      printf("Veuillez saisir un nombre compris entre 0 et 16\n");
+      printf("Veuillez saisir un nombre compris entre 0 et %d\n", TAILLE_GRID - 1);
     }
     viderbuffer();
   }
   conditioncolonne = 1;
 
-  for (i = 0; i < 17; i++) {
-    for (j = 0; j < 17; j++) {
+  for (i = 0; i < TAILLE_GRID; i++) {
+    for (j = 0; j < TAILLE_GRID; j++) {
       if (i == ligne && j == colonne) {
         casevalide = verifie(grid, ligne, colonne);
 	if (casevalide == 0) {

@@ -5,6 +5,9 @@
 #include <unistd.h>
 
 
+#define TAILLE_GRID 20
+
+
 // Prototype create_grid.c
 int ft_test_born(int indice_col,int indice_line);
 int ft_test_boat(char **grid, int indice_col, int indice_line);
