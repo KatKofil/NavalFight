@@ -84,7 +84,7 @@ int attaquer(char **grid) {
   while (conditionligne == 1) {
     printf("Choississez la ligne (lettre minuscule):\n");
     scanf("%c", &ligne);
-    if (ligne >= 97 && ligne <= 113) {
+    if (ligne >= 97 && ligne <= 97 + TAILLE_GRID -1) {
       ligne -= 97;
       conditionligne = 0;
     } else {
@@ -140,7 +140,7 @@ void boucle(char **grid1, char **grid2) {
     while(compteurjoueurun == 0) {  // Boucle joueur 1
       printf("Grille de %s\nSélectionnez la ligne et la colonne à attaquer :\n", joueur1);
       afficher(grid1);
-      if (attaquer(grid2) == 0) {  // Si on a réussi à placer une lettre, on sort de la boucle
+      if (attaquer(grid2) == 0) {
 	compteurjoueurun = 1;
       } else {
 	printf("Veuillez ressaisir les coordonnées. \n");
@@ -154,7 +154,7 @@ void boucle(char **grid1, char **grid2) {
     while(compteurjoueurdeux == 0) {  // Boucle joueur 2
       printf("Grille de %s\nSélectionnez la ligne et la colonne à attaquer :\n", joueur2);
       afficher(grid2);
-      if (attaquer(grid1) == 0) {  // Si on a réussi à placer une lettre, on sort de la boucle
+      if (attaquer(grid1) == 0) {
 	compteurjoueurdeux = 1;
       } else {
 	printf("Veuillez ressaisir les coordonnées. \n");
