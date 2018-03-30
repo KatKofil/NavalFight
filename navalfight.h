@@ -5,7 +5,7 @@
 #include <unistd.h>
 
 
-#define TAILLE_GRID 24
+#define TAILLE_GRID 15
 
 
 //Prototype test_taille_grid
@@ -14,14 +14,8 @@ void test_taille_grid();
 // Prototype create_grid.c
 int ft_test_born(int indice_col,int indice_line);
 int ft_test_boat(char **grid, int indice_col, int indice_line);
-int ft_boat_1_2(char **grid, int indice_col, int indice_line);
-int ft_boat_1_3(char **grid, int indice_col, int indice_line);
-int ft_boat_1_4(char **grid, int indice_col, int indice_line);
-int ft_boat_1_5(char **grid, int indice_col, int indice_line);
-int ft_boat_1_6(char **grid, int indice_col, int indice_line);
-int ft_boat_2_2(char **grid, int indice_col, int indice_line);
-int ft_boat_2_4(char **grid, int indice_col, int indice_line);
-int ft_boat_1_4_1_3(char **grid, int indice_col, int indice_line);
+int ft_boat_verifie(char **grid, int indice_col, int indice_line, int size_col, int size_line);
+int ft_boat_put(char ** grid, int indice_col, int indice_line, int size_col, int size_line);
 char **ft_fill_grid(char **grid);
 char **cree_tableau(void);
 
