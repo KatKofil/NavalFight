@@ -1,6 +1,6 @@
 #include "navalfight.h"
 
-//test si un bateau est present dans la case et les case adjacente
+// Test si un bateau ne dépasse pas de la grille
 
 int ft_test_born(int indice_col,int indice_line){
 	if (indice_col > TAILLE_GRID - 1)
@@ -14,657 +14,107 @@ int ft_test_born(int indice_col,int indice_line){
 	return 0;
 }
 
+// Test si un bateau est présent sur la case
+
 int ft_test_boat(char **grid, int indice_col, int indice_line){
-	if (grid[indice_line][indice_col] == 'O')
-		return 1;
-	return 0;
+  if (grid[indice_line][indice_col] == 'O')
+    return 1;
+  return 0;
 }
 
-int ft_boat_1_2(char **grid, int indice_col, int indice_line){
-	int conteur_col = indice_col;
-	int conteur_line = indice_line;
+// Teste si on ne depasse pas de la taille de la grille et qu'il n'y a pas deja de bateau
 
-	if (ft_test_boat(grid, conteur_col, conteur_line) != 0)
-		return 1;
-	if (ft_test_born(conteur_col, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line + 1) != 0)
-			return 1;
+int ft_boat_verifie(char **grid, int indice_col, int indice_line, int size_col, int size_line) {  
+  int conteur_col = indice_col;
+  int conteur_line = indice_line;
+  
+  for (indice_line; indice_line < conteur_line + size_line; indice_line++)  
+    for (indice_col = conteur_col; indice_col < conteur_col + size_col; indice_col++) {
+
+      // Si on est sur la ligne 0 ou la colonne 0
+      if (indice_col == 0 || indice_line == 0) { 
+	//if (ft_test_born(indice_col, indice_line) == 0)
+	  if (ft_test_boat(grid, indice_col, indice_line) != 0 || ft_test_boat(grid, indice_col + 1, indice_line) != 0 || ft_test_boat(grid, indice_col, indice_line + 1) != 0) {
+	    return 1;
+	  } else {
+	    continue;
+	  }
+      }
+
+      /* if (indice_col >= TAILLE_GRID - size_col - 1 || indice_line >= TAILLE_GRID - size_line - 1) {
+	if (ft_test_born(indice_col, indice_line) == 0) {
+	  if (ft_test_boat(grid, indice_col, indice_line) != 0 || ft_test_boat(grid, indice_col - 1, indice_line) != 0 || ft_test_boat(grid, indice_col, indice_line - 1) != 0) {
+	    return 1;
+	  } else {
+	    continue;
+	  }
+	  
+	} else {
+	  return 1;
 	}
-	if (ft_test_born(conteur_col, conteur_line - 1) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line - 1) != 0)
-			return 1;
+	}*/
+	
+      // Sinon, pour les autres cases
+	
+      // Vérifie sur la case actuelle et adjacente si on ne dépasse pas de la grille
+      if (ft_test_born(indice_col, indice_line) == 0 && ft_test_born(indice_col - 1, indice_line) == 0 && ft_test_born(indice_col + 1, indice_line) == 0 && ft_test_born(indice_col, indice_line - 1) == 0 && ft_test_born(indice_col, indice_line + 1) == 0) { 
+
+	if (ft_test_boat(grid, indice_col, indice_line) != 0 || ft_test_boat(grid, indice_col - 1, indice_line) != 0 || ft_test_boat(grid, indice_col + 1, indice_line) != 0 || ft_test_boat(grid, indice_col, indice_line + 1) != 0 || ft_test_boat(grid, indice_col, indice_line - 1) != 0) {  
+	  return 1;
 	}
-	if (ft_test_born(conteur_col - 1, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col - 1, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 2, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col + 2, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line - 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line - 1) != 0)
-			return 1;
-	}
-	if (indice_col < TAILLE_GRID - 1){
-		grid[indice_line][indice_col] = 'O';
-		grid[indice_line][indice_col + 1] = 'O';
-		return 0;
-	}
+	  
+      } else { // Sinon, on a dépassé de la grille
 	return 1;
+      }
+    }
+
+  // Si on a réussi toutes les vérifications, on retourne 0
+  return 0;
 }
 
-int ft_boat_1_3(char **grid, int indice_col, int indice_line){
-	int conteur_col = indice_col;
-	int conteur_line = indice_line;
+int ft_boat_put(char **grid, int indice_col, int indice_line, int size_col, int size_line) {  // Fonction qui appelle les vérifications et met un caractère
+  int conteur_col = indice_col;
+  int conteur_line = indice_line;
 
-	if (ft_test_born(conteur_col, conteur_line - 1) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line - 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col - 1, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col - 1, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line - 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line - 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 2, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col + 2, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 2, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 2, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 2, conteur_line - 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 2, conteur_line - 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 3, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col + 3, conteur_line) != 0)
-			return 1;
-	}
-	if (indice_col < TAILLE_GRID - 2){
-		grid[indice_line][indice_col] = 'O';
-		grid[indice_line][indice_col + 1] = 'O';
-		grid[indice_line][indice_col + 2] = 'O';
-		return 0;
-	}
-	return 1;
+  if (ft_test_boat(grid, conteur_col, conteur_line) != 0) {  // Teste si il y a bateau sur la case actuelle
+    return 1;
+  }
+
+  if (ft_boat_verifie(grid, indice_col, indice_line, size_col, size_line) != 0)
+    return 1;
+
+
+  
+  
+  for (conteur_line; conteur_line < indice_line + size_line; conteur_line++){  // Met le caractere 'O'
+    for (conteur_col = indice_col; conteur_col < indice_col + size_col; conteur_col++) {
+      printf("cont col %d cont lin %d size col %d size lin %d\n",conteur_col, conteur_line, size_col, size_line);
+      //if ((conteur_col < TAILLE_GRID - size_col - 1) || (conteur_line < TAILLE_GRID - size_line - 1)){
+	grid[conteur_line][conteur_col] = 'O';
+	//}
+    }
+  }
+  return 0;
+  
 }
 
-int ft_boat_1_4(char **grid, int indice_col, int indice_line){
-	int conteur_col = indice_col;
-	int conteur_line = indice_line;
+// Choisis des coordonnées aléatoires
 
-	if (ft_test_boat(grid, conteur_col, conteur_line) != 0)
-		return 1;
-	if (ft_test_born(conteur_col + 1, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col - 1, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col - 1, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col, conteur_line - 1) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line - 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col - 1, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col - 1, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col, conteur_line + 2) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line + 2) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line + 2) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line + 2) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col - 1, conteur_line + 2) == 0){
-		if (ft_test_boat(grid, conteur_col - 1, conteur_line + 2) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col, conteur_line + 3) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line + 3) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line + 3) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line + 3) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col - 1, conteur_line + 3) == 0){
-		if (ft_test_boat(grid, conteur_col - 1, conteur_line + 3) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col, conteur_line + 4) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line + 4) != 0)
-			return 1;
-	}
-	if (indice_line < TAILLE_GRID - 3){
-		grid[indice_line][indice_col] = 'O';
-		grid[indice_line + 1][indice_col] = 'O';
-		grid[indice_line + 2][indice_col] = 'O';
-		grid[indice_line + 3][indice_col] = 'O';
-		return 0;
-	}
-	return 1;
-}
-
-int ft_boat_1_5(char **grid, int indice_col, int indice_line){
-	int conteur_col = indice_col;
-	int conteur_line = indice_line;
-
-	if (ft_test_boat(grid, conteur_col, conteur_line) != 0)
-		return 1;
-	if (ft_test_born(conteur_col + 1, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col - 1, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col - 1, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col, conteur_line - 1) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line - 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col - 1, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col - 1, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col, conteur_line + 2) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line + 2) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line + 2) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line + 2) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col - 1, conteur_line + 2) == 0){
-		if (ft_test_boat(grid, conteur_col - 1, conteur_line + 2) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col, conteur_line + 3) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line + 3) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line + 3) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line + 3) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col - 1, conteur_line + 3) == 0){
-		if (ft_test_boat(grid, conteur_col - 1, conteur_line + 3) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col, conteur_line + 4) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line + 4) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col - 1, conteur_line + 4) == 0){
-		if (ft_test_boat(grid, conteur_col - 1, conteur_line + 4) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line + 4) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line + 4) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col, conteur_line + 5) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line + 5) != 0)
-			return 1;
-	}
-	if (indice_line < TAILLE_GRID - 4){
-		grid[indice_line][indice_col] = 'O';
-		grid[indice_line + 1][indice_col] = 'O';
-		grid[indice_line + 2][indice_col] = 'O';
-		grid[indice_line + 3][indice_col] = 'O';
-		grid[indice_line + 4][indice_col] = 'O';
-		return 0;
-	}
-	return 1;
-}
-
-int ft_boat_1_6(char **grid, int indice_col, int indice_line){
-	int conteur_col = indice_col;
-	int conteur_line = indice_line;
-
-	if (ft_test_boat(grid, conteur_col, conteur_line) != 0)
-		return 1;
-	if (ft_test_born(conteur_col, conteur_line - 1) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line - 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line + 1) != 0)
-			return 1;
-	}
-if (ft_test_born(conteur_col - 1, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col - 1, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line - 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line - 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 2, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col + 2, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 2, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 2, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 2, conteur_line - 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 2, conteur_line - 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 3, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col + 3, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 3, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 3, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 3, conteur_line - 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 3, conteur_line - 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 4, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col + 4, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 4, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 4, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 4, conteur_line - 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 4, conteur_line - 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 5, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col + 5, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 5, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 5, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 5, conteur_line - 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 5, conteur_line - 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 6, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col + 6, conteur_line) != 0)
-			return 1;
-	}
-	if (indice_col < TAILLE_GRID - 5){
-		grid[indice_line][indice_col] = 'O';
-		grid[indice_line][indice_col + 1] = 'O';
-		grid[indice_line][indice_col + 2] = 'O';
-		grid[indice_line][indice_col + 3] = 'O';
-		grid[indice_line][indice_col + 4] = 'O';
-		grid[indice_line][indice_col + 5] = 'O';
-		return 0;
-	}
-	return 1;
-}
-
-int ft_boat_2_2(char **grid, int indice_col, int indice_line){
-	int conteur_col = indice_col;
-	int conteur_line = indice_line;
-
-	if (ft_test_boat(grid,  conteur_col, conteur_line) != 0)
-		return 1;
-	if (ft_test_born(conteur_col - 1, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col - 1, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col, conteur_line - 1) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line - 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 2, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col + 2, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line - 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line - 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col - 1, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col - 1, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col, conteur_line + 2) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line + 2) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 2, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 2, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line + 2) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line + 2) != 0)
-			return 1;
-	}
-	if (indice_col < TAILLE_GRID - 2 && indice_line < TAILLE_GRID - 2){
-		grid[indice_line][indice_col] = 'O';
-		grid[indice_line + 1][indice_col] = 'O';
-		grid[indice_line][indice_col + 1] = 'O';
-		grid[indice_line + 1][indice_col + 1] = 'O';
-		return 0;
-	}
-	return 1;
-}
-
-int ft_boat_2_4(char **grid, int indice_col, int indice_line){
-	int conteur_col = indice_col;
-	int conteur_line = indice_line;
-
-	if (ft_test_boat(grid,  conteur_col, conteur_line) != 0)
-		return 1;
-	if (ft_test_born(conteur_col - 1, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col - 1, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col, conteur_line - 1) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line - 1) != 0)
-			return 1;
-	}
-
-	if (ft_test_born(conteur_col + 1, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line - 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line - 1) != 0)
-			return 1;
-	}
-
-	if (ft_test_born(conteur_col + 2, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col + 2, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 2, conteur_line - 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 2, conteur_line - 1) != 0)
-			return 1;
-	}
-
-	if (ft_test_born(conteur_col + 3, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col + 3, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 3, conteur_line - 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 3, conteur_line - 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 4, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col + 4, conteur_line) != 0)
-			return 1;
-	}
-
-	if (ft_test_born(conteur_col, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col - 1, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col - 1, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col, conteur_line + 2) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line + 2) != 0)
-			return 1;
-	}
-
-	if (ft_test_born(conteur_col + 1, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line + 2) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line + 2) != 0)
-			return 1;
-	}
-
-	if (ft_test_born(conteur_col + 2, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 2, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 2, conteur_line + 2) == 0){
-		if (ft_test_boat(grid, conteur_col + 2, conteur_line + 2) != 0)
-			return 1;
-	}
-
-	if (ft_test_born(conteur_col + 3, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 3, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 3, conteur_line + 2) == 0){
-		if (ft_test_boat(grid, conteur_col + 3, conteur_line + 2) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 3, conteur_line + 4) == 0){
-		if (ft_test_boat(grid, conteur_col + 3, conteur_line + 4) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 4, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 4, conteur_line + 1) != 0)
-			return 1;
-	}
-
-	if (indice_col < TAILLE_GRID - 4 && indice_line < TAILLE_GRID - 2){
-		grid[indice_line][indice_col] = 'O';
-		grid[indice_line + 1][indice_col] = 'O';
-		grid[indice_line][indice_col + 1] = 'O';
-		grid[indice_line][indice_col + 2] = 'O';
-		grid[indice_line][indice_col + 3] = 'O';
-		grid[indice_line + 1][indice_col + 1] = 'O';
-		grid[indice_line + 1][indice_col + 2] = 'O';
-		grid[indice_line + 1][indice_col + 3] = 'O';
-		return 0;
-	}
-	return 1;
-}
-
-int ft_boat_1_4_1_3(char **grid, int indice_col, int indice_line){
-	int conteur_col = indice_col;
-	int conteur_line = indice_line;
-
-	if (ft_test_boat(grid, conteur_col, conteur_line) != 0)
-		return 1;
-	if (ft_test_born(conteur_col + 1, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col - 1, conteur_line) == 0){
-		if (ft_test_boat(grid, conteur_col - 1, conteur_line) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col, conteur_line - 1) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line - 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col - 1, conteur_line + 1) == 0){
-		if (ft_test_boat(grid, conteur_col - 1, conteur_line + 1) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col, conteur_line + 2) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line + 2) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line + 2) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line + 2) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col - 1, conteur_line + 2) == 0){
-		if (ft_test_boat(grid, conteur_col - 1, conteur_line + 2) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col, conteur_line + 3) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line + 3) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col - 1, conteur_line + 3) == 0){
-		if (ft_test_boat(grid, conteur_col - 1, conteur_line + 3) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col, conteur_line + 4) == 0){
-		if (ft_test_boat(grid, conteur_col, conteur_line + 4) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line + 3) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line + 3) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 1, conteur_line + 4) == 0){
-		if (ft_test_boat(grid, conteur_col + 1, conteur_line + 4) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 2, conteur_line + 3) == 0){
-		if (ft_test_boat(grid, conteur_col + 2, conteur_line + 3) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 2, conteur_line + 2) == 0){
-		if (ft_test_boat(grid, conteur_col + 2, conteur_line + 2) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 3, conteur_line + 3) == 0){
-		if (ft_test_boat(grid, conteur_col + 3, conteur_line + 3) != 0)
-			return 1;
-	}
-	if (ft_test_born(conteur_col + 2, conteur_line + 4) == 0){
-		if (ft_test_boat(grid, conteur_col + 2, conteur_line + 4) != 0)
-			return 1;
-	}
-	if (indice_line < TAILLE_GRID - 4 && indice_col < TAILLE_GRID - 3){
-		grid[indice_line][indice_col] = 'O';
-		grid[indice_line + 1][indice_col] = 'O';
-		grid[indice_line + 2][indice_col] = 'O';
-		grid[indice_line + 3][indice_col] = 'O';
-		grid[indice_line + 3][indice_col + 1] = 'O';
-		grid[indice_line + 3][indice_col + 2] = 'O';
-		return 0;
-	}
-	return 1;
-}
-
-
-char **ft_fill_grid(char **grid){
+char **ft_fill_grid(char **grid, int size_col, int size_line){
 	int indice_col = (rand() % TAILLE_GRID);
 	int indice_line = (rand() % TAILLE_GRID);
 
-	while (ft_boat_1_2(grid, indice_col, indice_line) != 0){
+	while (ft_boat_put(grid, indice_col, indice_line, size_col, size_line) != 0){
 		indice_col = (rand() % TAILLE_GRID);
 		indice_line = (rand() % TAILLE_GRID);
 	}
 	indice_col = (rand() % TAILLE_GRID);
 	indice_line = (rand() % TAILLE_GRID);
-	while (ft_boat_1_3(grid, indice_col, indice_line) != 0){
-		indice_col = (rand() % TAILLE_GRID);
-		indice_line = (rand() % TAILLE_GRID);
-	}
-	indice_col = (rand() % TAILLE_GRID);
-	indice_line = (rand() % TAILLE_GRID);
-	while (ft_boat_1_4(grid, indice_col, indice_line) != 0){
-		indice_col = (rand() % TAILLE_GRID);
-		indice_line = (rand() % TAILLE_GRID);
-	}
-	indice_col = (rand() % TAILLE_GRID);
-	indice_line = (rand() % TAILLE_GRID);
-	while (ft_boat_1_5(grid, indice_col, indice_line) != 0){
-		indice_col = (rand() % TAILLE_GRID);
-		indice_line = (rand() % TAILLE_GRID);
-	}
-	indice_col = (rand() % TAILLE_GRID);
-	indice_line = (rand() % TAILLE_GRID);
-	while (ft_boat_1_6(grid, indice_col, indice_line) != 0){
-		indice_col = (rand() % TAILLE_GRID);
-		indice_line = (rand() % TAILLE_GRID);
-	}
-	indice_col = (rand() % TAILLE_GRID);
-	indice_line = (rand() % TAILLE_GRID);
-	while (ft_boat_2_2(grid, indice_col, indice_line) != 0){
-		indice_col = (rand() % TAILLE_GRID);
-		indice_line = (rand() % TAILLE_GRID);
-	}
-	indice_col = (rand() % TAILLE_GRID);
-	indice_line = (rand() % TAILLE_GRID);
-	while (ft_boat_2_4(grid, indice_col, indice_line) != 0){
-		indice_col = (rand() % TAILLE_GRID);
-		indice_line = (rand() % TAILLE_GRID);
-	}
-	indice_col = (rand() % TAILLE_GRID);
-	indice_line = (rand() % TAILLE_GRID);
-	while (ft_boat_1_4_1_3(grid, indice_col, indice_line) != 0){
-		indice_col = (rand() % TAILLE_GRID);
-		indice_line = (rand() % TAILLE_GRID);
-	}
+    
 	return grid;
 }
+
+// Cree une grille et appelle la fonction de placement des bateaux
 
 char **cree_tableau(void){
 	char **grid;
@@ -680,6 +130,37 @@ char **cree_tableau(void){
 		grid[conteur_line][conteur_col] = '\0';
 	}
 	grid[conteur_line][0] = '\0';
-	grid = ft_fill_grid(grid);
+
+	
+
+	//grid = ft_fill_grid(grid, 18, 18);
+	
+	grid = ft_fill_grid(grid, 2, 2);
+	grid = ft_fill_grid(grid, 2, 2);
+	grid = ft_fill_grid(grid, 2, 2);
+	grid = ft_fill_grid(grid, 2, 2);
+	grid = ft_fill_grid(grid, 2, 2);
+	
+	grid = ft_fill_grid(grid, 2, 2);
+	grid = ft_fill_grid(grid, 2, 2);
+	grid = ft_fill_grid(grid, 2, 2);
+	grid = ft_fill_grid(grid, 2, 2);
+	grid = ft_fill_grid(grid, 2, 2);
+	
+	grid = ft_fill_grid(grid, 2, 2);
+	grid = ft_fill_grid(grid, 2, 2);
+	grid = ft_fill_grid(grid, 2, 2);
+	grid = ft_fill_grid(grid, 2, 2);
+	grid = ft_fill_grid(grid, 2, 2);
+
+	grid = ft_fill_grid(grid, 2, 2);
+	grid = ft_fill_grid(grid, 2, 2);
+	grid = ft_fill_grid(grid, 2, 2);
+	grid = ft_fill_grid(grid, 2, 2);
+	grid = ft_fill_grid(grid, 2, 2);
+	
+	grid = ft_fill_grid(grid, 2, 2);
+
+	
 	return grid;
 }
