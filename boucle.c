@@ -84,7 +84,7 @@ int attaquer(char **grid) {
   while (conditionligne == 1) {
     printf("Choississez la ligne (lettre minuscule):\n");
     scanf("%c", &ligne);
-    if (ligne >= 97 && ligne <= 113) {
+    if (ligne >= 97 && ligne <= 97 + TAILLE_GRID -1) {
       ligne -= 97;
       conditionligne = 0;
     } else {

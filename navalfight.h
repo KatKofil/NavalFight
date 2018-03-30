@@ -5,8 +5,11 @@
 #include <unistd.h>
 
 
-#define TAILLE_GRID 20
+#define TAILLE_GRID 24
 
+
+//Prototype test_taille_grid
+void test_taille_grid();
 
 // Prototype create_grid.c
 int ft_test_born(int indice_col,int indice_line);
