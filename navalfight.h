@@ -16,7 +16,7 @@ int ft_test_born(int indice_col,int indice_line);
 int ft_test_boat(char **grid, int indice_col, int indice_line);
 int ft_boat_verifie(char **grid, int indice_col, int indice_line, int size_col, int size_line);
 int ft_boat_put(char ** grid, int indice_col, int indice_line, int size_col, int size_line);
-char **ft_fill_grid(char **grid);
+char **ft_fill_grid(char **grid, int size_col, int size_line);
 char **cree_tableau(void);
 
 // Prototype test_couler.c
