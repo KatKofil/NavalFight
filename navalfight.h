@@ -47,10 +47,7 @@ void findepartie(void);
 void insert(char **grid, int ligne  , int colonne);
 int verifie (char **grid, int ligne  , int colonne);
 int attaquer(char **grid);
-//void affiche(char** grid);  // A remplacer
 void boucle(char **grid, char**);
-
-
 
 // Protype main.c
 int main(void);
