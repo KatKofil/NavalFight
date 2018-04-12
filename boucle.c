@@ -1,9 +1,5 @@
 #include "navalfight.h"
 
-
-
-
-
 char * nomjoueur(){
   char *chaine, *temporaire;
   chaine = malloc(20* sizeof(char));
@@ -61,14 +57,14 @@ int verifie (char **grid, int ligne  , int colonne){
     insert(grid, ligne, colonne);
     return 0;
   }
-  if(grid[ligne][colonne]== 'O'){ // bea
+  if(grid[ligne][colonne]== 'O'){
     insert(grid, ligne, colonne);
     return 0;        
   }
   if(grid[ligne][colonne]== '*' || grid[ligne][colonne]== '+'|| grid[ligne][colonne]== 'X'){
-    sleep(1);
     printf("\nImpossible de jouer, case déjà attaquée !\n");
-    // demande au joueur de choisir une autre case 
+    printf("\nVeuillez ressaisir les coordonnées. \n\n");
+    sleep(1);
     return 1;
   }
   return 1;
@@ -81,6 +77,9 @@ int attaquer(char **grid) {
   int conditioncolonne = 1;
   int i, j;    // Compteur plateau
   int casevalide;
+  char a = 'a';
+
+  // Séléctionne la ligne
   while (conditionligne == 1) {
     printf("Choississez la ligne (lettre minuscule):\n");
     scanf("%c", &ligne);
@@ -88,12 +87,13 @@ int attaquer(char **grid) {
       ligne -= 97;
       conditionligne = 0;
     } else {
-      printf("Veuillez saisir une lettre minuscule compris entre a et q\n");
+      printf("Veuillez saisir une lettre minuscule compris entre a et %c\n", a + TAILLE_GRID - 1);
     }
     viderbuffer();
   }
   conditionligne = 1;
 
+  // Séléctionne la colonne
   while (conditioncolonne == 1) {
     printf("Choississez la colonne (nombre):\n");
     scanf("%d", &colonne);
@@ -106,6 +106,7 @@ int attaquer(char **grid) {
   }
   conditioncolonne = 1;
 
+  // Parcourt la grille puis appelle la fonction de vérification
   for (i = 0; i < TAILLE_GRID; i++) {
     for (j = 0; j < TAILLE_GRID; j++) {
       if (i == ligne && j == colonne) {
@@ -140,12 +141,8 @@ void boucle(char **grid1, char **grid2) {
     while(compteurjoueurun == 0) {  // Boucle joueur 1
       printf("Grille de %s\nSélectionnez la ligne et la colonne à attaquer :\n", joueur1);
       afficher(grid1);
-      if (attaquer(grid2) == 0) {
+      if (attaquer(grid2) == 0)
 	compteurjoueurun = 1;
-      } else {
-	printf("Veuillez ressaisir les coordonnées. \n");
-      }
-      
     }
     compteurjoueurun = 0;
 
@@ -154,11 +151,8 @@ void boucle(char **grid1, char **grid2) {
     while(compteurjoueurdeux == 0) {  // Boucle joueur 2
       printf("Grille de %s\nSélectionnez la ligne et la colonne à attaquer :\n", joueur2);
       afficher(grid2);
-      if (attaquer(grid1) == 0) {
+      if (attaquer(grid1) == 0)
 	compteurjoueurdeux = 1;
-      } else {
-	printf("Veuillez ressaisir les coordonnées. \n");
-      }
     }
     compteurjoueurdeux = 0;
   }
